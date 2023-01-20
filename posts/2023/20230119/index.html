@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"/><meta name="og:site_name" content="hakota's Blog"/><link rel="canonical" href="https://hakota.github.io/posts/2023/20230119"/><meta name="twitter:url" content="https://hakota.github.io/posts/2023/20230119"/><meta name="og:url" content="https://hakota.github.io/posts/2023/20230119"/><title>SwiftUIでFooterを実装する | hakota's Blog</title><meta name="twitter:title" content="SwiftUIでFooterを実装する | hakota's Blog"/><meta name="og:title" content="SwiftUIでFooterを実装する | hakota's Blog"/><meta name="description" content="SafeAreaを意識しつつ、キーボードに押し上げられない下部固定のFooterを実装方法"/><meta name="twitter:description" content="SafeAreaを意識しつつ、キーボードに押し上げられない下部固定のFooterを実装方法"/><meta name="og:description" content="SafeAreaを意識しつつ、キーボードに押し上げられない下部固定のFooterを実装方法"/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><link rel="stylesheet" href="/sundellsColors.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to hakota's Blog"/></head><body class="item-page"><header><div class="wrapper"><a href="/" class="site-name">hakota's Blog</a></div></header><div class="wrapper"><article><div class="content"><h1>SwiftUIでFooterを実装する</h1><h2>はじめに</h2><p>SafeAreaの有無でFooterの下部のpaddingを変えたい場合は、<code>.edgesIgnoringSafeArea(.bottom)</code> などで可能ですが キーボードが表示される画面だとキーボードと干渉して、FooterのViewがキーボードの上まで引き上げられてしまいます。</p><h2>回避策</h2><p>SafeAreaをGeometryReader経由で取得し、SafeArea.bottomの高さを持つ背景色と同じColorを追加します。 ただし、キーボードが表示されるタイミングでは参照しないようにする。</p><pre><code>
+<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"/><meta name="og:site_name" content="hakota's Blog"/><link rel="canonical" href="https://hakota.github.io/posts/2023/20230119"/><meta name="twitter:url" content="https://hakota.github.io/posts/2023/20230119"/><meta name="og:url" content="https://hakota.github.io/posts/2023/20230119"/><title>SwiftUIでFooterを実装する | hakota's Blog</title><meta name="twitter:title" content="SwiftUIでFooterを実装する | hakota's Blog"/><meta name="og:title" content="SwiftUIでFooterを実装する | hakota's Blog"/><meta name="description" content="SafeAreaを意識しつつ、キーボードに押し上げられない下部固定のFooterを実装する方法"/><meta name="twitter:description" content="SafeAreaを意識しつつ、キーボードに押し上げられない下部固定のFooterを実装する方法"/><meta name="og:description" content="SafeAreaを意識しつつ、キーボードに押し上げられない下部固定のFooterを実装する方法"/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><link rel="stylesheet" href="/sundellsColors.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to hakota's Blog"/></head><body class="item-page"><script async src="https://platform.twitter.com/widgets.js"></script><header><div class="wrapper"><a href="/" class="site-name">hakota's Blog</a></div></header><div class="wrapper"><div class="share-buttons"><a href="https://twitter.com/intent/tweet?text=SwiftUI%E3%81%A7Footer%E3%82%92%E5%AE%9F%E8%A3%85%E3%81%99%E3%82%8B%20%7C%20hakota%27s%20Blog&url=https%3A//hakota.github.io/posts/2023/20230119" class="twitter-share-button">ツイート</a></div><article><div class="content"><h1>SwiftUIでFooterを実装する</h1><h2>はじめに</h2><p>SafeAreaの有無でFooterの下部のpaddingを変えたい場合は、<code>.edgesIgnoringSafeArea(.bottom)</code> などで可能ですが キーボードが表示される画面だとキーボードと干渉して、FooterのViewがキーボードの上まで引き上げられてしまいます。</p><h2>回避策</h2><p>SafeAreaを <code>GeometryReader</code> 経由で取得し、SafeArea.bottomの高さを持つ背景色と同じColorを追加します。 ただし、キーボードが表示されるタイミングでは参照しないようにする。※例では分かりやすいように色を別で表示しています</p><pre><code>
 
 <span class="keyword">struct</span> FooterView: <span class="type">View</span> {
     <span class="keyword">@State private var</span> isShowingKeyboard: <span class="type">Bool</span> = <span class="keyword">false
@@ -14,7 +14,7 @@
                     <span class="type">Button</span>(
                         action: {},
                         label: {
-                            <span class="type">Text</span>(<span class="string">"Footer"</span>)
+                            <span class="type">Text</span>(<span class="string">"Button"</span>)
                                 .<span class="call">padding</span>()
                                 .<span class="call">background</span>(<span class="type">Color</span>.<span class="property">green</span>)
                         }
@@ -41,5 +41,13 @@
         }
     }
 }
-</code></pre><img src="/Assets/20230119.png" width=400>
-</div><span>Tagged with: </span><ul class="tag-list"><li><a href="/tags/swiftui">SwiftUI</a></li></ul></article></div><footer><p>Generated using <a href="https://github.com/johnsundell/publish">Publish</a></p><p><a href="/feed.rss">RSS feed</a></p></footer></body></html>
+</code></pre><table border="0">
+    <tr>
+      <th>SafeArea.bottom有り</th>
+      <th>SafeArea.bottom無し</th>
+    </tr>
+    <tr>
+      <td> <img src="/Assets/20230119_1.png"> </td>
+      <td> <img src="/Assets/20230119_2.png"> </td>
+    </tr>
+</table></div><span>Tagged with: </span><ul class="tag-list"><li><a href="/tags/swiftui">SwiftUI</a></li></ul></article></div><footer><p>Generated using <a href="https://github.com/johnsundell/publish">Publish</a></p><p><a href="/feed.rss">RSS feed</a></p></footer></body></html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>hakota's Blog</title><description>日々の開発の話</description><link>https://hakota.github.io</link><language>ja</language><lastBuildDate>Fri, 20 Jan 2023 00:47:40 +0900</lastBuildDate><pubDate>Fri, 20 Jan 2023 00:47:40 +0900</pubDate><ttl>250</ttl><atom:link href="https://hakota.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">https://hakota.github.io/posts/2023/20230119</guid><title>SwiftUIでFooterを実装する</title><description>SafeAreaを意識しつつ、キーボードに押し上げられない下部固定のFooterを実装方法</description><link>https://hakota.github.io/posts/2023/20230119</link><pubDate>Thu, 19 Jan 2023 22:15:00 +0900</pubDate><content:encoded><![CDATA[<h1>SwiftUIでFooterを実装する</h1><h2>はじめに</h2><p>SafeAreaの有無でFooterの下部のpaddingを変えたい場合は、<code>.edgesIgnoringSafeArea(.bottom)</code> などで可能ですが キーボードが表示される画面だとキーボードと干渉して、FooterのViewがキーボードの上まで引き上げられてしまいます。</p><h2>回避策</h2><p>SafeAreaをGeometryReader経由で取得し、SafeArea.bottomの高さを持つ背景色と同じColorを追加します。 ただし、キーボードが表示されるタイミングでは参照しないようにする。</p><pre><code>
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>hakota's Blog</title><description>日々の開発の話</description><link>https://hakota.github.io</link><language>ja</language><lastBuildDate>Fri, 20 Jan 2023 23:50:59 +0900</lastBuildDate><pubDate>Fri, 20 Jan 2023 23:50:59 +0900</pubDate><ttl>250</ttl><atom:link href="https://hakota.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">https://hakota.github.io/posts/2023/20230119</guid><title>SwiftUIでFooterを実装する</title><description>SafeAreaを意識しつつ、キーボードに押し上げられない下部固定のFooterを実装する方法</description><link>https://hakota.github.io/posts/2023/20230119</link><pubDate>Fri, 20 Jan 2023 00:50:00 +0900</pubDate><content:encoded><![CDATA[<h1>SwiftUIでFooterを実装する</h1><h2>はじめに</h2><p>SafeAreaの有無でFooterの下部のpaddingを変えたい場合は、<code>.edgesIgnoringSafeArea(.bottom)</code> などで可能ですが キーボードが表示される画面だとキーボードと干渉して、FooterのViewがキーボードの上まで引き上げられてしまいます。</p><h2>回避策</h2><p>SafeAreaを <code>GeometryReader</code> 経由で取得し、SafeArea.bottomの高さを持つ背景色と同じColorを追加します。 ただし、キーボードが表示されるタイミングでは参照しないようにする。※例では分かりやすいように色を別で表示しています</p><pre><code>
 
 <span class="keyword">struct</span> FooterView: <span class="type">View</span> {
     <span class="keyword">@State private var</span> isShowingKeyboard: <span class="type">Bool</span> = <span class="keyword">false
@@ -14,7 +14,7 @@
                     <span class="type">Button</span>(
                         action: {},
                         label: {
-                            <span class="type">Text</span>(<span class="string">"Footer"</span>)
+                            <span class="type">Text</span>(<span class="string">"Button"</span>)
                                 .<span class="call">padding</span>()
                                 .<span class="call">background</span>(<span class="type">Color</span>.<span class="property">green</span>)
                         }
@@ -41,5 +41,13 @@
         }
     }
 }
-</code></pre><img src="https://hakota.github.io/Assets/20230119.png" width=400>
-]]></content:encoded></item><item><guid isPermaLink="true">https://hakota.github.io/posts/2023/20230118</guid><title>はじめまして</title><description>挨拶の記事</description><link>https://hakota.github.io/posts/2023/20230118</link><pubDate>Wed, 18 Jan 2023 22:15:00 +0900</pubDate><content:encoded><![CDATA[<h1>はじめまして</h1><p>hakotaと申します。長崎出身の92・93年世代です。今は京都に住んでます。主にiOSアプリ開発を生業としてます。 こちらでは備忘録的な技術のメモなどを主に投稿していこうと思っています。 更新頻度も不定期で、ゆるーく長くできたらいいなと思います。 よろしくおねがいします。</p>]]></content:encoded></item></channel></rss>
+</code></pre><table border="0">
+    <tr>
+      <th>SafeArea.bottom有り</th>
+      <th>SafeArea.bottom無し</th>
+    </tr>
+    <tr>
+      <td> <img src="https://hakota.github.io/Assets/20230119_1.png"> </td>
+      <td> <img src="https://hakota.github.io/Assets/20230119_2.png"> </td>
+    </tr>
+</table>]]></content:encoded></item><item><guid isPermaLink="true">https://hakota.github.io/posts/2023/20230118</guid><title>はじめまして</title><description>挨拶の記事</description><link>https://hakota.github.io/posts/2023/20230118</link><pubDate>Wed, 18 Jan 2023 22:15:00 +0900</pubDate><content:encoded><![CDATA[<h1>はじめまして</h1><p>hakotaと申します。長崎出身の92・93年世代です。今は京都に住んでます。主にiOSアプリ開発を生業としてます。 こちらでは備忘録的な技術のメモなどを主に投稿していこうと思っています。 更新頻度も不定期で、ゆるーく長くできたらいいなと思います。 よろしくおねがいします。</p>]]></content:encoded></item></channel></rss>
